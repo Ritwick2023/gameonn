@@ -124,12 +124,13 @@ function Navbar() {
 
           <div className="flex items-center gap-2">
             <a
-              href="#login"
+              href="/login"
               className="hidden rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:inline-flex"
             >
               Login
             </a>
-            <a href="#book" className="hidden sm:inline-flex">
+            <a href="/dashboard/book" className="hidden sm:inline-flex">
+
               <RippleButton variant="primary" size="sm">
                 Book Now <ArrowRight className="h-4 w-4" />
               </RippleButton>
