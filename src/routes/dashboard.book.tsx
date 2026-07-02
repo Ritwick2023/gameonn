@@ -159,7 +159,7 @@ function BookSlot() {
               </div>
             </div>
 
-            <RippleButton variant="primary" size="lg" className="mt-6 w-full" disabled={slot === null}>
+            <RippleButton variant="primary" size="lg" className="mt-6 w-full" disabled={slot === null} onClick={proceed}>
               Proceed to Payment <ArrowRight className="h-4 w-4" />
             </RippleButton>
             <p className="mt-3 text-center text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
