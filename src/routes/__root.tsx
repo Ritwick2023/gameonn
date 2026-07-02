@@ -115,6 +115,7 @@ function RootShell({ children }: { children: ReactNode }) {
       </head>
       <body className="bg-background text-foreground antialiased">
         {children}
+        <Toaster theme="dark" position="top-center" richColors closeButton toastOptions={{ className: "!bg-surface !border-white/10 !text-foreground" }} />
         <Scripts />
       </body>
     </html>
