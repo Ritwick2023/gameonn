@@ -59,6 +59,7 @@ function HomePage() {
       <Contact />
       <Footer />
       <MobileStickyCTA />
+      <ScrollToTop />
     </div>
   );
 }
