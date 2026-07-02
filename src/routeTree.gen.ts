@@ -21,6 +21,7 @@ import { Route as DashboardProfileRouteImport } from './routes/dashboard.profile
 import { Route as DashboardPaymentsRouteImport } from './routes/dashboard.payments'
 import { Route as DashboardNotificationsRouteImport } from './routes/dashboard.notifications'
 import { Route as DashboardMatchesRouteImport } from './routes/dashboard.matches'
+import { Route as DashboardCheckoutRouteImport } from './routes/dashboard.checkout'
 import { Route as DashboardBookingsRouteImport } from './routes/dashboard.bookings'
 import { Route as DashboardBookRouteImport } from './routes/dashboard.book'
 import { Route as AdminTournamentsRouteImport } from './routes/admin.tournaments'
@@ -93,6 +94,11 @@ const DashboardNotificationsRoute = DashboardNotificationsRouteImport.update({
 const DashboardMatchesRoute = DashboardMatchesRouteImport.update({
   id: '/matches',
   path: '/matches',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardCheckoutRoute = DashboardCheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardBookingsRoute = DashboardBookingsRouteImport.update({
@@ -180,6 +186,7 @@ export interface FileRoutesByFullPath {
   '/admin/tournaments': typeof AdminTournamentsRoute
   '/dashboard/book': typeof DashboardBookRoute
   '/dashboard/bookings': typeof DashboardBookingsRoute
+  '/dashboard/checkout': typeof DashboardCheckoutRoute
   '/dashboard/matches': typeof DashboardMatchesRoute
   '/dashboard/notifications': typeof DashboardNotificationsRoute
   '/dashboard/payments': typeof DashboardPaymentsRoute
@@ -205,6 +212,7 @@ export interface FileRoutesByTo {
   '/admin/tournaments': typeof AdminTournamentsRoute
   '/dashboard/book': typeof DashboardBookRoute
   '/dashboard/bookings': typeof DashboardBookingsRoute
+  '/dashboard/checkout': typeof DashboardCheckoutRoute
   '/dashboard/matches': typeof DashboardMatchesRoute
   '/dashboard/notifications': typeof DashboardNotificationsRoute
   '/dashboard/payments': typeof DashboardPaymentsRoute
@@ -233,6 +241,7 @@ export interface FileRoutesById {
   '/admin/tournaments': typeof AdminTournamentsRoute
   '/dashboard/book': typeof DashboardBookRoute
   '/dashboard/bookings': typeof DashboardBookingsRoute
+  '/dashboard/checkout': typeof DashboardCheckoutRoute
   '/dashboard/matches': typeof DashboardMatchesRoute
   '/dashboard/notifications': typeof DashboardNotificationsRoute
   '/dashboard/payments': typeof DashboardPaymentsRoute
@@ -262,6 +271,7 @@ export interface FileRouteTypes {
     | '/admin/tournaments'
     | '/dashboard/book'
     | '/dashboard/bookings'
+    | '/dashboard/checkout'
     | '/dashboard/matches'
     | '/dashboard/notifications'
     | '/dashboard/payments'
@@ -287,6 +297,7 @@ export interface FileRouteTypes {
     | '/admin/tournaments'
     | '/dashboard/book'
     | '/dashboard/bookings'
+    | '/dashboard/checkout'
     | '/dashboard/matches'
     | '/dashboard/notifications'
     | '/dashboard/payments'
@@ -314,6 +325,7 @@ export interface FileRouteTypes {
     | '/admin/tournaments'
     | '/dashboard/book'
     | '/dashboard/bookings'
+    | '/dashboard/checkout'
     | '/dashboard/matches'
     | '/dashboard/notifications'
     | '/dashboard/payments'
@@ -415,6 +427,13 @@ declare module '@tanstack/react-router' {
       path: '/matches'
       fullPath: '/dashboard/matches'
       preLoaderRoute: typeof DashboardMatchesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/checkout': {
+      id: '/dashboard/checkout'
+      path: '/checkout'
+      fullPath: '/dashboard/checkout'
+      preLoaderRoute: typeof DashboardCheckoutRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/bookings': {
@@ -546,6 +565,7 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 interface DashboardRouteChildren {
   DashboardBookRoute: typeof DashboardBookRoute
   DashboardBookingsRoute: typeof DashboardBookingsRoute
+  DashboardCheckoutRoute: typeof DashboardCheckoutRoute
   DashboardMatchesRoute: typeof DashboardMatchesRoute
   DashboardNotificationsRoute: typeof DashboardNotificationsRoute
   DashboardPaymentsRoute: typeof DashboardPaymentsRoute
@@ -557,6 +577,7 @@ interface DashboardRouteChildren {
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardBookRoute: DashboardBookRoute,
   DashboardBookingsRoute: DashboardBookingsRoute,
+  DashboardCheckoutRoute: DashboardCheckoutRoute,
   DashboardMatchesRoute: DashboardMatchesRoute,
   DashboardNotificationsRoute: DashboardNotificationsRoute,
   DashboardPaymentsRoute: DashboardPaymentsRoute,
