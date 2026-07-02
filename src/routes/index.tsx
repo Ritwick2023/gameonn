@@ -1033,9 +1033,78 @@ function ContactCard({ icon: Icon, label, value, href, accent }: { icon: typeof 
 
 /* ─────────────────────────── FOOTER ─────────────────────────── */
 function Footer() {
+  const [email, setEmail] = useState("");
+  const year = new Date().getFullYear();
+
+  function subscribe(e: React.FormEvent) {
+    e.preventDefault();
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      toast.error("Enter a valid email");
+      return;
+    }
+    toast.success("You're on the list", { description: "We'll email you weekly slot drops & tournament alerts." });
+    setEmail("");
+  }
+
+  const cols: { title: string; links: { label: string; href: string; external?: boolean }[] }[] = [
+    {
+      title: "Explore",
+      links: [
+        { label: "Book Now", href: "#book" },
+        { label: "Facilities", href: "#facilities" },
+        { label: "Pricing", href: "#pricing" },
+        { label: "Gallery", href: "#gallery" },
+      ],
+    },
+    {
+      title: "Company",
+      links: [
+        { label: "About", href: "#about" },
+        { label: "Tournaments", href: "#matches" },
+        { label: "Reviews", href: "#reviews" },
+        { label: "Contact", href: "#contact" },
+      ],
+    },
+    {
+      title: "Account",
+      links: [
+        { label: "Login / Sign up", href: "/login", external: true },
+        { label: "My Bookings", href: "/dashboard/bookings", external: true },
+        { label: "Admin Portal", href: "/admin", external: true },
+        { label: "FAQ", href: "#faq" },
+      ],
+    },
+  ];
+
   return (
     <footer className="relative mt-20 border-t border-white/5 px-4 pb-10 pt-20 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
+        {/* Newsletter */}
+        <div className="relative mb-16 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-primary/10 via-surface to-accent/5 p-8 sm:p-10">
+          <div className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-primary/20 blur-3xl" />
+          <div className="relative grid gap-6 md:grid-cols-[1.4fr_1fr] md:items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full glass px-3 py-1">
+                <Sparkles className="h-3 w-3 text-primary" />
+                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">Newsletter</span>
+              </div>
+              <h3 className="mt-3 font-display text-2xl font-bold sm:text-3xl">Slot drops, tournaments & early access.</h3>
+              <p className="mt-1 text-sm text-muted-foreground">Join 2,400+ players in Wardha. No spam — one email a week.</p>
+            </div>
+            <form onSubmit={subscribe} className="flex items-center gap-2 rounded-full glass-strong p-1.5 shadow-elevated">
+              <Mail className="ml-3 h-4 w-4 shrink-0 text-muted-foreground" />
+              <input
+                type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@email.com"
+                className="w-full bg-transparent px-1 py-2 text-sm outline-none placeholder:text-muted-foreground/60"
+              />
+              <button type="submit" className="inline-flex h-10 shrink-0 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-semibold text-primary-foreground hover:shadow-glow">
+                Subscribe <Send className="h-3.5 w-3.5" />
+              </button>
+            </form>
+          </div>
+        </div>
+
         <div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-2.5">
@@ -1049,12 +1118,21 @@ function Footer() {
             <p className="mt-4 max-w-sm text-sm text-muted-foreground">
               Wardha's premier turf & sports arena. Play. Book. Repeat.
             </p>
+            <div className="mt-5 space-y-2 text-xs text-muted-foreground">
+              <a href="tel:+919999999999" className="flex items-center gap-2 hover:text-foreground"><Phone className="h-3.5 w-3.5 text-primary" /> +91 99999 99999</a>
+              <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-foreground"><MessageCircle className="h-3.5 w-3.5 text-primary" /> WhatsApp us</a>
+              <a href="https://maps.google.com/?q=Wardha+Maharashtra" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-foreground"><MapPin className="h-3.5 w-3.5 text-primary" /> Bachelor Rd, Wardha</a>
+            </div>
             <div className="mt-6 flex gap-2">
-              {[Instagram, Facebook, MessageCircle].map((Icon, i) => (
+              {[
+                { Icon: Instagram, href: "https://instagram.com" },
+                { Icon: Facebook, href: "https://facebook.com" },
+                { Icon: MessageCircle, href: "https://wa.me/919999999999" },
+              ].map(({ Icon, href }, i) => (
                 <a
-                  key={i}
-                  href="#"
+                  key={i} href={href} target="_blank" rel="noopener noreferrer"
                   className="grid h-10 w-10 place-items-center rounded-xl glass transition-all hover:-translate-y-0.5 hover:bg-primary hover:text-primary-foreground"
+                  aria-label="Social link"
                 >
                   <Icon className="h-4 w-4" />
                 </a>
@@ -1062,21 +1140,25 @@ function Footer() {
             </div>
           </div>
 
-          {[
-            { title: "Explore", links: ["Book Now", "Facilities", "Pricing", "Gallery"] },
-            { title: "Company", links: ["About", "Tournaments", "Careers", "Contact"] },
-            { title: "Legal", links: ["Terms", "Privacy", "Refunds", "Support"] },
-          ].map((col) => (
+          {cols.map((col) => (
             <div key={col.title}>
               <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">{col.title}</div>
               <ul className="mt-4 space-y-2.5">
-                {col.links.map((l) => (
-                  <li key={l}>
-                    <a href="#" className="text-sm text-foreground/80 transition-colors hover:text-primary">
-                      {l}
-                    </a>
-                  </li>
-                ))}
+                {col.links.map((l) =>
+                  l.external ? (
+                    <li key={l.label}>
+                      <Link to={l.href} className="text-sm text-foreground/80 transition-colors hover:text-primary">
+                        {l.label}
+                      </Link>
+                    </li>
+                  ) : (
+                    <li key={l.label}>
+                      <a href={l.href} className="text-sm text-foreground/80 transition-colors hover:text-primary">
+                        {l.label}
+                      </a>
+                    </li>
+                  ),
+                )}
               </ul>
             </div>
           ))}
@@ -1084,16 +1166,46 @@ function Footer() {
 
         <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-white/5 pt-8 sm:flex-row sm:items-center">
           <div className="font-mono text-xs uppercase tracking-wider text-muted-foreground">
-            © 2026 Game Onn Arena. Wardha, India.
+            © {year} Game Onn Arena. Wardha, India.
           </div>
-          <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-            Built for players, by players.
+          <div className="flex gap-4 font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
+            <a href="#" className="hover:text-foreground">Terms</a>
+            <a href="#" className="hover:text-foreground">Privacy</a>
+            <a href="#" className="hover:text-foreground">Refunds</a>
           </div>
         </div>
       </div>
     </footer>
   );
 }
+
+/* ─────────────────────────── SCROLL TO TOP ─────────────────────────── */
+function ScrollToTop() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > 800);
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.button
+          initial={{ opacity: 0, scale: 0.6, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.6, y: 20 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          aria-label="Scroll to top"
+          className="fixed bottom-24 right-4 z-40 grid h-12 w-12 place-items-center rounded-full bg-primary text-primary-foreground shadow-glow ring-1 ring-primary/30 hover:brightness-110 sm:bottom-6 sm:right-6"
+        >
+          <ArrowUp className="h-5 w-5" strokeWidth={2.5} />
+        </motion.button>
+      )}
+    </AnimatePresence>
+  );
+}
+
 
 /* ─────────────────────────── MOBILE STICKY CTA ─────────────────────────── */
 function MobileStickyCTA() {
