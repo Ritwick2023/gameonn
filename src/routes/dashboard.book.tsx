@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, IndianRupee, Clock, Sparkles, MapPin, ArrowRight } from "lucide-react";
@@ -14,6 +14,7 @@ const HOURS = Array.from({ length: 17 }, (_, i) => i + 6); // 6 AM – 10 PM
 const BOOKED = new Set([8, 18, 20]);
 
 function BookSlot() {
+  const navigate = useNavigate();
   const [sport, setSport] = useState<Sport>("Football");
   const [month, setMonth] = useState(() => new Date());
   const [selectedDay, setSelectedDay] = useState(() => new Date().getDate());
@@ -23,6 +24,12 @@ function BookSlot() {
   const basePrice: Record<Sport, number> = { Football: 1200, Cricket: 1800, "Box Cricket": 1500, Pickleball: 800 };
   const mult = slot !== null && slot >= 17 ? 1.25 : 1;
   const price = slot !== null ? basePrice[sport] * mult : 0;
+
+  function proceed() {
+    if (slot === null) return;
+    const date = new Date(month.getFullYear(), month.getMonth(), selectedDay).toISOString().slice(0, 10);
+    navigate({ to: "/dashboard/checkout", search: { sport, date, hour: slot, court: "Turf A", price } });
+  }
 
   return (
     <div className="space-y-6">
@@ -152,7 +159,7 @@ function BookSlot() {
               </div>
             </div>
 
-            <RippleButton variant="primary" size="lg" className="mt-6 w-full" disabled={slot === null}>
+            <RippleButton variant="primary" size="lg" className="mt-6 w-full" disabled={slot === null} onClick={proceed}>
               Proceed to Payment <ArrowRight className="h-4 w-4" />
             </RippleButton>
             <p className="mt-3 text-center text-[10px] font-mono uppercase tracking-wider text-muted-foreground">
