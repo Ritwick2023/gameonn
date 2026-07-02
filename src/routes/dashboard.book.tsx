@@ -14,6 +14,7 @@ const HOURS = Array.from({ length: 17 }, (_, i) => i + 6); // 6 AM – 10 PM
 const BOOKED = new Set([8, 18, 20]);
 
 function BookSlot() {
+  const navigate = useNavigate();
   const [sport, setSport] = useState<Sport>("Football");
   const [month, setMonth] = useState(() => new Date());
   const [selectedDay, setSelectedDay] = useState(() => new Date().getDate());
@@ -23,6 +24,12 @@ function BookSlot() {
   const basePrice: Record<Sport, number> = { Football: 1200, Cricket: 1800, "Box Cricket": 1500, Pickleball: 800 };
   const mult = slot !== null && slot >= 17 ? 1.25 : 1;
   const price = slot !== null ? basePrice[sport] * mult : 0;
+
+  function proceed() {
+    if (slot === null) return;
+    const date = new Date(month.getFullYear(), month.getMonth(), selectedDay).toISOString().slice(0, 10);
+    navigate({ to: "/dashboard/checkout", search: { sport, date, hour: slot, court: "Turf A", price } });
+  }
 
   return (
     <div className="space-y-6">
