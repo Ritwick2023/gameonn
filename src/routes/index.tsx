@@ -1,12 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useSpring, useInView, AnimatePresence } from "framer-motion";
+import { toast } from "sonner";
 import {
   Menu, X, MapPin, Phone, MessageCircle, Instagram, Facebook,
   Calendar, Clock, IndianRupee, ChevronRight, ChevronDown, Star,
   Zap, Shield, Car, Droplets, Camera, Wind, Heart, Dumbbell,
   Trophy, Users, Sparkles, ArrowRight, Play, Navigation, Mail,
-  Check, Flame,
+  Check, Flame, ArrowUp, Send,
 } from "lucide-react";
 
 import heroFootball from "@/assets/hero/hero-football.jpg";
