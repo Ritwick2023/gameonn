@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   IndianRupee, Activity, AlertCircle, Calendar, ArrowUpRight,
-  ClipboardList, Users, Trophy, Megaphone, Wallet, Image, Flame,
+  ClipboardList, Users, Trophy, Megaphone, Image, Flame,
 } from "lucide-react";
 import { PageHeader, Reveal, StatusPill } from "@/components/shell/ui-bits";
 import { ADMIN_STATS, MOCK_BOOKINGS } from "@/lib/mock-data";
