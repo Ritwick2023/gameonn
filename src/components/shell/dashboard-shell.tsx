@@ -1,10 +1,11 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import {
   LayoutDashboard, CalendarPlus, ClipboardList, Trophy, Wallet, Bell,
   User, LifeBuoy, LogOut, Menu, X, Search, Flame,
 } from "lucide-react";
 import { Logo } from "@/components/shell/ui-bits";
+import { clearRole } from "@/lib/auth";
 import { AnimatePresence, motion } from "framer-motion";
 
 type NavItem = { to: string; label: string; icon: typeof LayoutDashboard; end?: boolean };
