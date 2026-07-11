@@ -107,8 +107,7 @@ function Kpi({ label, value, delta, icon: Icon, tint }: { label: string; value: 
     warn: { grad: "from-amber-400/15 to-transparent", icon: "text-amber-400", ring: "ring-amber-400/20" },
   }[tint];
 
-  // Wallet import kept for tree-shake friendliness; referenced here so linter doesn't complain
-  void Wallet;
+
 
   return (
     <Reveal>
