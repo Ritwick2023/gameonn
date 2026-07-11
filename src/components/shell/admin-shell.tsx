@@ -56,9 +56,9 @@ export function AdminShell({ children }: { children: ReactNode }) {
           })}
         </nav>
         <div className="border-t border-white/5 p-3">
-          <Link to="/" className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-white/5 hover:text-foreground">
+          <button onClick={logout} className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-white/5 hover:text-foreground">
             <LogOut className="h-4 w-4" /> Logout
-          </Link>
+          </button>
         </div>
       </aside>
 
