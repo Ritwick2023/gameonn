@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Phone, ShieldCheck, KeyRound, User } from "lucide-react";
 import { Logo, RippleButton } from "@/components/shell/ui-bits";
+import { setRole } from "@/lib/auth";
 import heroFootball from "@/assets/hero/hero-football.jpg";
 
 export const Route = createFileRoute("/login")({
@@ -132,7 +133,7 @@ function PhoneFlow() {
             </RippleButton>
           </motion.form>
         ) : (
-          <OtpStep key="otp" phone={phone} onBack={() => setStep("phone")} onVerify={() => navigate({ to: "/complete-profile" })} />
+          <OtpStep key="otp" phone={phone} onBack={() => setStep("phone")} onVerify={() => { setRole("client"); navigate({ to: "/complete-profile" }); }} />
         )}
       </AnimatePresence>
     </motion.div>
@@ -204,8 +205,8 @@ function CredentialsFlow() {
       onSubmit={(e) => {
         e.preventDefault();
         const low = id.trim().toLowerCase();
-        if (low === "admin" && pw === "Admin") navigate({ to: "/admin" });
-        else if (low === "client" && pw === "Client") navigate({ to: "/dashboard" });
+        if (low === "admin" && pw === "Admin") { setRole("admin"); navigate({ to: "/admin" }); }
+        else if (low === "client" && pw === "Client") { setRole("client"); navigate({ to: "/dashboard" }); }
         else setErr("Invalid credentials. Try Admin/Admin or Client/Client.");
       }}
       className="space-y-5"

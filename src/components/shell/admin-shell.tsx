@@ -1,10 +1,11 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import {
   LayoutDashboard, ClipboardList, Calendar, Users, Wallet, TrendingUp,
   Tags, Image, Star, Trophy, Megaphone, Settings, LogOut, Menu, X, Search,
 } from "lucide-react";
 import { Logo } from "@/components/shell/ui-bits";
+import { clearRole } from "@/lib/auth";
 import { AnimatePresence, motion } from "framer-motion";
 
 type NavItem = { to: string; label: string; icon: typeof LayoutDashboard; end?: boolean };
@@ -27,6 +28,8 @@ const NAV: NavItem[] = [
 export function AdminShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const logout = () => { clearRole(); navigate({ to: "/login", replace: true }); };
 
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[240px_minmax(0,1fr)]">
@@ -53,9 +56,9 @@ export function AdminShell({ children }: { children: ReactNode }) {
           })}
         </nav>
         <div className="border-t border-white/5 p-3">
-          <Link to="/" className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-white/5 hover:text-foreground">
+          <button onClick={logout} className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm text-muted-foreground hover:bg-white/5 hover:text-foreground">
             <LogOut className="h-4 w-4" /> Logout
-          </Link>
+          </button>
         </div>
       </aside>
 
