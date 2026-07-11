@@ -205,8 +205,8 @@ function CredentialsFlow() {
       onSubmit={(e) => {
         e.preventDefault();
         const low = id.trim().toLowerCase();
-        if (low === "admin" && pw === "Admin") navigate({ to: "/admin" });
-        else if (low === "client" && pw === "Client") navigate({ to: "/dashboard" });
+        if (low === "admin" && pw === "Admin") { setRole("admin"); navigate({ to: "/admin" }); }
+        else if (low === "client" && pw === "Client") { setRole("client"); navigate({ to: "/dashboard" }); }
         else setErr("Invalid credentials. Try Admin/Admin or Client/Client.");
       }}
       className="space-y-5"
