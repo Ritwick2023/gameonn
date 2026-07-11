@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Phone, ShieldCheck, KeyRound, User } from "lucide-react";
 import { Logo, RippleButton } from "@/components/shell/ui-bits";
+import { setRole } from "@/lib/auth";
 import heroFootball from "@/assets/hero/hero-football.jpg";
 
 export const Route = createFileRoute("/login")({
