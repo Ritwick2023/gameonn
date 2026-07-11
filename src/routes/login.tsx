@@ -133,7 +133,7 @@ function PhoneFlow() {
             </RippleButton>
           </motion.form>
         ) : (
-          <OtpStep key="otp" phone={phone} onBack={() => setStep("phone")} onVerify={() => navigate({ to: "/complete-profile" })} />
+          <OtpStep key="otp" phone={phone} onBack={() => setStep("phone")} onVerify={() => { setRole("client"); navigate({ to: "/complete-profile" }); }} />
         )}
       </AnimatePresence>
     </motion.div>
