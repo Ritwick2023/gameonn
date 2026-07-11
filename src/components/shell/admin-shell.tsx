@@ -28,6 +28,8 @@ const NAV: NavItem[] = [
 export function AdminShell({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const path = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const logout = () => { clearRole(); navigate({ to: "/login", replace: true }); };
 
   return (
     <div className="min-h-screen lg:grid lg:grid-cols-[240px_minmax(0,1fr)]">
