@@ -50,9 +50,9 @@ export function DashboardShell({ children }: { children: ReactNode }) {
           })}
         </nav>
         <div className="p-3">
-          <Link to="/" className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-white/5 hover:text-foreground">
+          <button onClick={logout} className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-white/5 hover:text-foreground">
             <LogOut className="h-4 w-4" /> Logout
-          </Link>
+          </button>
         </div>
       </aside>
 
