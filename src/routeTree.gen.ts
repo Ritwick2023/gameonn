@@ -32,9 +32,11 @@ import { Route as AdminPricingRouteImport } from './routes/admin.pricing'
 import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
 import { Route as AdminGalleryRouteImport } from './routes/admin.gallery'
 import { Route as AdminCustomersRouteImport } from './routes/admin.customers'
+import { Route as AdminCouponsRouteImport } from './routes/admin.coupons'
 import { Route as AdminCalendarRouteImport } from './routes/admin.calendar'
 import { Route as AdminBookingsRouteImport } from './routes/admin.bookings'
 import { Route as AdminAnnouncementsRouteImport } from './routes/admin.announcements'
+import { Route as AdminCouponsCodeRouteImport } from './routes/admin.coupons_.$code'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -151,6 +153,11 @@ const AdminCustomersRoute = AdminCustomersRouteImport.update({
   path: '/customers',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminCouponsRoute = AdminCouponsRouteImport.update({
+  id: '/coupons',
+  path: '/coupons',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminCalendarRoute = AdminCalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
@@ -166,6 +173,11 @@ const AdminAnnouncementsRoute = AdminAnnouncementsRouteImport.update({
   path: '/announcements',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminCouponsCodeRoute = AdminCouponsCodeRouteImport.update({
+  id: '/coupons_/$code',
+  path: '/coupons/$code',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -176,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/admin/announcements': typeof AdminAnnouncementsRoute
   '/admin/bookings': typeof AdminBookingsRoute
   '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/coupons': typeof AdminCouponsRoute
   '/admin/customers': typeof AdminCustomersRoute
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/payments': typeof AdminPaymentsRoute
@@ -194,6 +207,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/support': typeof DashboardSupportRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/admin/coupons/$code': typeof AdminCouponsCodeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -202,6 +216,7 @@ export interface FileRoutesByTo {
   '/admin/announcements': typeof AdminAnnouncementsRoute
   '/admin/bookings': typeof AdminBookingsRoute
   '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/coupons': typeof AdminCouponsRoute
   '/admin/customers': typeof AdminCustomersRoute
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/payments': typeof AdminPaymentsRoute
@@ -220,6 +235,7 @@ export interface FileRoutesByTo {
   '/dashboard/support': typeof DashboardSupportRoute
   '/admin': typeof AdminIndexRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/admin/coupons/$code': typeof AdminCouponsCodeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -231,6 +247,7 @@ export interface FileRoutesById {
   '/admin/announcements': typeof AdminAnnouncementsRoute
   '/admin/bookings': typeof AdminBookingsRoute
   '/admin/calendar': typeof AdminCalendarRoute
+  '/admin/coupons': typeof AdminCouponsRoute
   '/admin/customers': typeof AdminCustomersRoute
   '/admin/gallery': typeof AdminGalleryRoute
   '/admin/payments': typeof AdminPaymentsRoute
@@ -249,6 +266,7 @@ export interface FileRoutesById {
   '/dashboard/support': typeof DashboardSupportRoute
   '/admin/': typeof AdminIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/admin/coupons_/$code': typeof AdminCouponsCodeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -261,6 +279,7 @@ export interface FileRouteTypes {
     | '/admin/announcements'
     | '/admin/bookings'
     | '/admin/calendar'
+    | '/admin/coupons'
     | '/admin/customers'
     | '/admin/gallery'
     | '/admin/payments'
@@ -279,6 +298,7 @@ export interface FileRouteTypes {
     | '/dashboard/support'
     | '/admin/'
     | '/dashboard/'
+    | '/admin/coupons/$code'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -287,6 +307,7 @@ export interface FileRouteTypes {
     | '/admin/announcements'
     | '/admin/bookings'
     | '/admin/calendar'
+    | '/admin/coupons'
     | '/admin/customers'
     | '/admin/gallery'
     | '/admin/payments'
@@ -305,6 +326,7 @@ export interface FileRouteTypes {
     | '/dashboard/support'
     | '/admin'
     | '/dashboard'
+    | '/admin/coupons/$code'
   id:
     | '__root__'
     | '/'
@@ -315,6 +337,7 @@ export interface FileRouteTypes {
     | '/admin/announcements'
     | '/admin/bookings'
     | '/admin/calendar'
+    | '/admin/coupons'
     | '/admin/customers'
     | '/admin/gallery'
     | '/admin/payments'
@@ -333,6 +356,7 @@ export interface FileRouteTypes {
     | '/dashboard/support'
     | '/admin/'
     | '/dashboard/'
+    | '/admin/coupons_/$code'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -506,6 +530,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCustomersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/coupons': {
+      id: '/admin/coupons'
+      path: '/coupons'
+      fullPath: '/admin/coupons'
+      preLoaderRoute: typeof AdminCouponsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/calendar': {
       id: '/admin/calendar'
       path: '/calendar'
@@ -527,6 +558,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAnnouncementsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/coupons_/$code': {
+      id: '/admin/coupons_/$code'
+      path: '/coupons/$code'
+      fullPath: '/admin/coupons/$code'
+      preLoaderRoute: typeof AdminCouponsCodeRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
@@ -534,6 +572,7 @@ interface AdminRouteChildren {
   AdminAnnouncementsRoute: typeof AdminAnnouncementsRoute
   AdminBookingsRoute: typeof AdminBookingsRoute
   AdminCalendarRoute: typeof AdminCalendarRoute
+  AdminCouponsRoute: typeof AdminCouponsRoute
   AdminCustomersRoute: typeof AdminCustomersRoute
   AdminGalleryRoute: typeof AdminGalleryRoute
   AdminPaymentsRoute: typeof AdminPaymentsRoute
@@ -543,12 +582,14 @@ interface AdminRouteChildren {
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminTournamentsRoute: typeof AdminTournamentsRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminCouponsCodeRoute: typeof AdminCouponsCodeRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminAnnouncementsRoute: AdminAnnouncementsRoute,
   AdminBookingsRoute: AdminBookingsRoute,
   AdminCalendarRoute: AdminCalendarRoute,
+  AdminCouponsRoute: AdminCouponsRoute,
   AdminCustomersRoute: AdminCustomersRoute,
   AdminGalleryRoute: AdminGalleryRoute,
   AdminPaymentsRoute: AdminPaymentsRoute,
@@ -558,6 +599,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminSettingsRoute: AdminSettingsRoute,
   AdminTournamentsRoute: AdminTournamentsRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminCouponsCodeRoute: AdminCouponsCodeRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)

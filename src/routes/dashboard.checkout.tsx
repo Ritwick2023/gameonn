@@ -4,12 +4,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   IndianRupee, MapPin, Calendar, Clock, Shield, ArrowRight, ArrowLeft,
   CheckCircle2, Smartphone, CreditCard, Wallet, Building2, Lock, Download,
-  Share2, PartyPopper, X,
+  Share2, PartyPopper, X, TicketPercent,
 } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { RippleButton, PageHeader } from "@/components/shell/ui-bits";
 import { SPORTS, type Sport } from "@/lib/mock-data";
+import { validateCoupon as validateCouponService } from "@/lib/coupon-service";
 
 const checkoutSearch = z.object({
   sport: z.enum(SPORTS as [Sport, ...Sport[]]).catch("Football"),
@@ -51,12 +52,18 @@ function Checkout() {
   function applyCoupon() {
     const code = coupon.trim().toUpperCase();
     if (!code) return;
-    if (code === "GAMEON20") {
-      setApplied({ code, off: Math.round(search.price * 0.2) });
-      toast.success("Coupon applied", { description: "20% off your slot." });
+    const result = validateCouponService(code, search.price, search.sport);
+    if (result.valid) {
+      setApplied({ code, off: result.discount });
+      toast.success("Coupon applied", { description: `You save ₹${result.discount.toLocaleString("en-IN")}` });
     } else {
-      toast.error("Invalid coupon", { description: "Try GAMEON20." });
+      toast.error(result.error ?? "Invalid coupon");
     }
+  }
+
+  function removeCoupon() {
+    setApplied(null);
+    setCoupon("");
   }
 
   function startPayment() {
@@ -133,10 +140,25 @@ function Checkout() {
                 {applied && <Row k={`Coupon (${applied.code})`} v={`− ₹${discount.toLocaleString("en-IN")}`} accent />}
               </dl>
 
-              <div className="mt-4 flex gap-2">
-                <input value={coupon} onChange={(e) => setCoupon(e.target.value)} placeholder="Coupon code" className="w-full rounded-xl bg-surface px-3 py-2 text-sm outline-none ring-1 ring-white/10 focus:ring-primary/50" />
-                <button onClick={applyCoupon} className="rounded-xl bg-white/5 px-3 text-xs font-semibold hover:bg-white/10">Apply</button>
-              </div>
+              {!applied ? (
+                <div className="mt-4">
+                  <div className="flex items-center gap-1.5 mb-2 text-xs font-semibold text-muted-foreground"><TicketPercent className="h-3 w-3" /> Have a Coupon?</div>
+                  <div className="flex gap-2">
+                    <input value={coupon} onChange={(e) => setCoupon(e.target.value)} placeholder="Enter coupon code" onKeyDown={(e) => e.key === "Enter" && applyCoupon()}
+                      className="w-full rounded-xl bg-surface px-3 py-2 font-mono text-sm uppercase outline-none ring-1 ring-white/10 focus:ring-primary/50" />
+                    <button onClick={applyCoupon} className="rounded-xl bg-white/5 px-4 text-xs font-semibold hover:bg-white/10 transition-colors">Apply</button>
+                  </div>
+                </div>
+              ) : (
+                <div className="mt-4 flex items-center justify-between rounded-xl bg-primary/10 px-3 py-2 ring-1 ring-primary/20">
+                  <div className="flex items-center gap-2">
+                    <TicketPercent className="h-4 w-4 text-primary" />
+                    <span className="font-mono text-sm font-bold text-primary">{applied.code}</span>
+                    <span className="text-xs text-primary/70">− ₹{discount.toLocaleString("en-IN")}</span>
+                  </div>
+                  <button onClick={removeCoupon} className="grid h-6 w-6 place-items-center rounded-full hover:bg-white/10"><X className="h-3 w-3 text-primary" /></button>
+                </div>
+              )}
 
               <div className="my-4 border-t border-dashed border-white/10" />
               <div className="flex items-baseline justify-between">

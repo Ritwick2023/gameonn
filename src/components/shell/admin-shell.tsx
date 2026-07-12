@@ -2,7 +2,7 @@ import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import {
   LayoutDashboard, ClipboardList, Calendar, Users, Wallet, TrendingUp,
-  Tags, Image, Star, Trophy, Megaphone, Settings, LogOut, Menu, X, Search,
+  Tags, TicketPercent, Image, Star, Trophy, Megaphone, Settings, LogOut, Menu, X, Search,
 } from "lucide-react";
 import { Logo } from "@/components/shell/ui-bits";
 import { clearRole } from "@/lib/auth";
@@ -17,6 +17,7 @@ const NAV: NavItem[] = [
   { to: "/admin/payments", label: "Payments", icon: Wallet },
   { to: "/admin/revenue", label: "Revenue", icon: TrendingUp },
   { to: "/admin/pricing", label: "Pricing", icon: Tags },
+  { to: "/admin/coupons", label: "Coupons", icon: TicketPercent },
   { to: "/admin/gallery", label: "Gallery", icon: Image },
   { to: "/admin/reviews", label: "Reviews", icon: Star },
   { to: "/admin/tournaments", label: "Tournaments", icon: Trophy },

@@ -74,3 +74,174 @@ export const HEATMAP = Array.from({ length: 7 }, (_, d) =>
     return Math.min(1, base + (weekend ? 0.2 : 0) + Math.random() * 0.3);
   }),
 );
+
+// ── Coupon types & mock data ────────────────────────────────────────
+
+export type CouponDiscountType = 'percentage' | 'flat';
+export type CouponStatus = 'active' | 'inactive' | 'expired';
+
+export interface Coupon {
+  code: string;
+  discountType: CouponDiscountType;
+  discountValue: number;
+  maxDiscount?: number;
+  minBooking?: number;
+  expiryType: 'unlimited' | 'date';
+  expiryDate?: string;
+  maxUses: number | 'unlimited';
+  usedCount: number;
+  perUserLimit?: number;
+  applicableSport: 'All Sports' | Sport;
+  status: CouponStatus;
+  description?: string;
+  createdDate: string;
+  lastModified: string;
+}
+
+export interface CouponUsage {
+  id: string;
+  couponCode: string;
+  customer: string;
+  bookingId: string;
+  bookingDate: string;
+  discountApplied: string;
+  amountSaved: number;
+}
+
+export const MOCK_COUPONS: Coupon[] = [
+  {
+    code: "WELCOME10",
+    discountType: "percentage",
+    discountValue: 10,
+    maxDiscount: 300,
+    minBooking: 500,
+    expiryType: "unlimited",
+    maxUses: "unlimited",
+    usedCount: 45,
+    applicableSport: "All Sports",
+    status: "active",
+    description: "Welcome offer — 10% off on your first booking!",
+    createdDate: "2026-01-10",
+    lastModified: "2026-06-15",
+  },
+  {
+    code: "GAMEONN200",
+    discountType: "flat",
+    discountValue: 200,
+    minBooking: 800,
+    expiryType: "date",
+    expiryDate: "2026-12-31",
+    maxUses: 100,
+    usedCount: 38,
+    applicableSport: "All Sports",
+    status: "active",
+    description: "Flat ₹200 off on bookings above ₹800.",
+    createdDate: "2026-02-01",
+    lastModified: "2026-06-28",
+  },
+  {
+    code: "WEEKEND25",
+    discountType: "percentage",
+    discountValue: 25,
+    maxDiscount: 500,
+    expiryType: "unlimited",
+    maxUses: "unlimited",
+    usedCount: 72,
+    applicableSport: "All Sports",
+    status: "active",
+    description: "25% off on all weekend bookings.",
+    createdDate: "2026-03-05",
+    lastModified: "2026-07-01",
+  },
+  {
+    code: "FOOTBALL15",
+    discountType: "percentage",
+    discountValue: 15,
+    maxDiscount: 400,
+    expiryType: "unlimited",
+    maxUses: "unlimited",
+    usedCount: 23,
+    applicableSport: "Football",
+    status: "active",
+    description: "15% off on all Football bookings.",
+    createdDate: "2026-04-12",
+    lastModified: "2026-06-20",
+  },
+  {
+    code: "SUMMER50",
+    discountType: "percentage",
+    discountValue: 50,
+    maxDiscount: 750,
+    minBooking: 1000,
+    expiryType: "date",
+    expiryDate: "2026-08-31",
+    maxUses: 50,
+    usedCount: 50,
+    applicableSport: "All Sports",
+    status: "expired",
+    description: "Summer special — 50% off! Limited time offer.",
+    createdDate: "2026-05-01",
+    lastModified: "2026-07-10",
+  },
+  {
+    code: "CRICKET10",
+    discountType: "percentage",
+    discountValue: 10,
+    maxDiscount: 250,
+    expiryType: "date",
+    expiryDate: "2026-09-30",
+    maxUses: 200,
+    usedCount: 89,
+    applicableSport: "Cricket",
+    status: "active",
+    description: "10% off on all Cricket bookings this season.",
+    createdDate: "2026-03-20",
+    lastModified: "2026-07-05",
+  },
+  {
+    code: "NEWUSER30",
+    discountType: "percentage",
+    discountValue: 30,
+    maxDiscount: 600,
+    minBooking: 500,
+    expiryType: "unlimited",
+    maxUses: "unlimited",
+    usedCount: 156,
+    perUserLimit: 1,
+    applicableSport: "All Sports",
+    status: "active",
+    description: "New user exclusive — 30% off on your first booking!",
+    createdDate: "2026-01-01",
+    lastModified: "2026-07-08",
+  },
+  {
+    code: "FLAT500",
+    discountType: "flat",
+    discountValue: 500,
+    minBooking: 2000,
+    expiryType: "date",
+    expiryDate: "2026-07-15",
+    maxUses: 20,
+    usedCount: 18,
+    applicableSport: "All Sports",
+    status: "inactive",
+    description: "Flat ₹500 off on premium bookings above ₹2000.",
+    createdDate: "2026-06-01",
+    lastModified: "2026-07-11",
+  },
+];
+
+export const MOCK_COUPON_USAGE: CouponUsage[] = [
+  { id: "CU-001", couponCode: "WELCOME10", customer: "Aarav Deshmukh", bookingId: "GO-8421", bookingDate: "2026-07-04", discountApplied: "10%", amountSaved: 150 },
+  { id: "CU-002", couponCode: "GAMEONN200", customer: "Priya Kulkarni", bookingId: "GO-8418", bookingDate: "2026-07-06", discountApplied: "₹200", amountSaved: 200 },
+  { id: "CU-003", couponCode: "WEEKEND25", customer: "Rohit Pawar", bookingId: "GO-8390", bookingDate: "2026-06-28", discountApplied: "25%", amountSaved: 200 },
+  { id: "CU-004", couponCode: "FOOTBALL15", customer: "Sneha Joshi", bookingId: "GO-8375", bookingDate: "2026-06-22", discountApplied: "15%", amountSaved: 225 },
+  { id: "CU-005", couponCode: "NEWUSER30", customer: "Ananya Rao", bookingId: "GO-8361", bookingDate: "2026-06-18", discountApplied: "30%", amountSaved: 450 },
+  { id: "CU-006", couponCode: "WELCOME10", customer: "Vikram Singh", bookingId: "GO-8501", bookingDate: "2026-07-08", discountApplied: "10%", amountSaved: 120 },
+  { id: "CU-007", couponCode: "CRICKET10", customer: "Rohit Pawar", bookingId: "GO-8515", bookingDate: "2026-07-09", discountApplied: "10%", amountSaved: 180 },
+  { id: "CU-008", couponCode: "SUMMER50", customer: "Aarav Deshmukh", bookingId: "GO-8302", bookingDate: "2026-06-10", discountApplied: "50%", amountSaved: 750 },
+  { id: "CU-009", couponCode: "GAMEONN200", customer: "Sneha Joshi", bookingId: "GO-8530", bookingDate: "2026-07-10", discountApplied: "₹200", amountSaved: 200 },
+  { id: "CU-010", couponCode: "FLAT500", customer: "Priya Kulkarni", bookingId: "GO-8545", bookingDate: "2026-06-30", discountApplied: "₹500", amountSaved: 500 },
+  { id: "CU-011", couponCode: "WEEKEND25", customer: "Vikram Singh", bookingId: "GO-8560", bookingDate: "2026-07-05", discountApplied: "25%", amountSaved: 375 },
+  { id: "CU-012", couponCode: "NEWUSER30", customer: "Ananya Rao", bookingId: "GO-8575", bookingDate: "2026-07-11", discountApplied: "30%", amountSaved: 270 },
+];

@@ -110,6 +110,9 @@ export function StatusPill({ status }: { status: string }) {
     Available: "bg-primary/15 text-primary ring-primary/30",
     Booked: "bg-muted text-muted-foreground ring-white/10",
     Approved: "bg-primary/15 text-primary ring-primary/30",
+    active: "bg-primary/15 text-primary ring-primary/30",
+    inactive: "bg-muted text-muted-foreground ring-white/10",
+    expired: "bg-destructive/15 text-destructive ring-destructive/30",
   };
   return (
     <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider ring-1 ${map[status] ?? "bg-white/5 text-muted-foreground ring-white/10"}`}>

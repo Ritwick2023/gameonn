@@ -1,0 +1,1 @@
+var e=`/assets/hero-football-Cb0IrLWs.jpg`;export{e as t};
